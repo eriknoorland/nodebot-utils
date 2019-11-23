@@ -1,6 +1,6 @@
 {
   "name": "robotlib",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A utils library for my Node based robots",
   "main": "index.js",
   "scripts": {
