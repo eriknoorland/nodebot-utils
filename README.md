@@ -1,5 +1,5 @@
 # node-robotlib
-A Javascript library for common utils for my NodeJS based robots.
+A Javascript library for common utilities for my NodeJS based robots.
 
 ## installation
 ```

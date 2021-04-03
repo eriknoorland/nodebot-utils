@@ -1,7 +1,7 @@
 {
   "name": "robotlib",
   "version": "0.0.1",
-  "description": "A utils library for my Node based robots",
+  "description": "A Javascript library for common utiitiess for my NodeJS based robots",
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
@@ -23,5 +23,8 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "mocha": "^6.2.2"
+  },
+  "dependencies": {
+    "serialport": "^9.0.7"
   }
 }
