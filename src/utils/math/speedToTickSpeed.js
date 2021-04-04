@@ -11,3 +11,5 @@ const speedToTickSpeed = (speed, distancePerTick, loopTime) => {
 
   return parseInt(ticksPerLoopTime, 10);
 };
+
+module.exports = speedToTickSpeed;
