@@ -7,12 +7,18 @@ module.exports = {
     pause: require('./src/utils/pause'),
 
     math: {
+      calculateDistance: require('./src/utils/math/calculateDistance'),
+      calculateHeading: require('./src/utils/math/calculateHeading'),
       deg2rad: require('./src/utils/math/deg2rad'),
+      fixedDecimals: require('./src/utils/math/fixedDecimals'),
+      getHeadingFromPoseToCoordinate: require('./src/utils/math/getHeadingFromPoseToCoordinate'),
       getRelativeAngleDifference: require('./src/utils/math/getRelativeAngleDifference'),
       numberToByteArray: require('./src/utils/math/numberToByteArray'),
       numberToHex: require('./src/utils/math/numberToHex'),
       parseDecToBinary: require('./src/utils/math/parseDecToBinary'),
       rad2deg: require('./src/utils/math/rad2deg'),
+      speedToTickSpeed: require('./src/utils/math/speedToTickSpeed'),
+      tickSpeedToSpeed: require('./src/utils/math/tickSpeedToSpeed'),
     },
 
     sensor: {

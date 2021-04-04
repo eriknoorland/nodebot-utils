@@ -1,4 +1,6 @@
 const assert = require('assert');
+const deg2rad = require('../../../src/utils/math/deg2rad');
+const rad2deg = require('../../../src/utils/math/rad2deg');
 const getRelativeAngleDifference = require('../../../src/utils/math/getRelativeAngleDifference');
 
 describe('utils/math', function() {
@@ -19,21 +21,21 @@ describe('utils/math', function() {
 
     it('should return -4 when the current angle is larger by 4 than the target angle is', function() {
       const expected = -4;
-      const actual = getRelativeAngleDifference(90, 94);
+      const actual = Math.round(rad2deg(getRelativeAngleDifference(deg2rad(90), deg2rad(94))));
 
       assert.equal(actual, expected);
     });
 
     it('should return -1 when the current angle is 0 and the target angle is 359', function() {
       const expected = -1;
-      const actual = getRelativeAngleDifference(359, 0);
+      const actual = Math.round(rad2deg(getRelativeAngleDifference(deg2rad(359), 0)));
 
       assert.equal(actual, expected);
     });
 
     it('should return 90 when the current angle is 179 and the target angle is 180', function() {
-      const expected = 90;
-      const actual = getRelativeAngleDifference(180, 90);
+      const expected = Math.PI / 2;
+      const actual = getRelativeAngleDifference(Math.PI, Math.PI / 2);
 
       assert.equal(actual, expected);
     });

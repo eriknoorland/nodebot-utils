@@ -5,7 +5,8 @@
  * @return {Number}
  */
 const getRelativeAngleDifference = (target, current) => (
-  ((target - current + (360 + 180)) % 360) - 180
+  // ((target - current + (360 + 180)) % 360) - 180
+  ((target - current + ((Math.PI * 2) + Math.PI)) % (Math.PI * 2)) - Math.PI
 );
 
 module.exports = getRelativeAngleDifference;

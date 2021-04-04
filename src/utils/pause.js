@@ -1,10 +1,10 @@
 /**
- * Pause
- * @param {int} timeout
+ * Pauses execution for given duration in miliseconds
+ * @param {int} duration
  * @return {Promise}
  */
-const pause = (timeout) => new Promise((resolve) => {
-  setTimeout(resolve, timeout);
+const pause = (duration = 1000) => new Promise((resolve) => {
+  setTimeout(resolve, duration);
 });
 
 module.exports = pause;
