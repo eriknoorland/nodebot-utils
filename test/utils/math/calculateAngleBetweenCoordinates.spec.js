@@ -10,35 +10,35 @@ describe('utils/math', function() {
       y: 100,
     };
 
-    it('should return 0 when both coordinates are identical', function() {
+    it('should return the radians equivalent of 0° when both coordinates are identical', function() {
       const expected = 0;
       const actual = calculateAngleBetweenCoordinates(coordinate1, coordinate1);
 
       assert.strictEqual(actual, expected);
     });
 
-    it('should return 0 when the second coordinates x-axis value is higher', function() {
+    it('should return the radians equivalent of 0° when the second coordinates x-axis value is higher', function() {
       const expected = 0;
       const actual = calculateAngleBetweenCoordinates(coordinate1, { x: 200, y: 100 });
 
       assert.strictEqual(actual, expected);
     });
 
-    it('should return -90 when the secondcoordinates y-axis value is lower', function() {
+    it('should return the radians equivalent of -90° when the second coordinates y-axis value is lower', function() {
       const expected = -90;
       const actual = rad2deg(calculateAngleBetweenCoordinates(coordinate1, { x: 100, y: 50 }));
 
       assert.strictEqual(actual, expected);
     });
 
-    it('should return -45 when the second coordinates x-axis value is higher and y-axis value is lower equally', function() {
+    it('should return the radians equivalent of -45° when the second coordinates x-axis value is higher and y-axis value is lower equally', function() {
       const expected = -45;
       const actual = rad2deg(calculateAngleBetweenCoordinates(coordinate1, { x: 150, y: 50 }));
 
       assert.strictEqual(actual, expected);
     });
 
-    it('should return 180 when the second coordinates x-axis value is lower', function() {
+    it('should return the radians equivalent of 180° when the second coordinates x-axis value is lower', function() {
       const expected = 180;
       const actual = rad2deg(calculateAngleBetweenCoordinates(coordinate1, { x: 50, y: 100 }));
 

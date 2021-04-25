@@ -6,8 +6,25 @@ const calculateAngleBetweenCoordinates = require('./calculateAngleBetweenCoordin
  * @param {Object} targetCoordinate
  * @return {Number}
  */
- const getHeadingFromPoseToCoordinate = (pose, targetCoordinate) => {
-  return calculateAngleBetweenCoordinates(pose, targetCoordinate) - pose.phi;
+const getHeadingFromPoseToCoordinate = (pose, targetCoordinate) => {
+  const angleBetweenCoordinates = calculateAngleBetweenCoordinates(pose, targetCoordinate);
+  const result = angleBetweenCoordinates - pose.phi;
+
+  console.log({
+    angleBetweenCoordinates,
+    phi: pose.phi,
+    result,
+  });
+
+  if (result > Math.PI) {
+    return ((2 * Math.PI) - result) * -1;
+  }
+
+  if (result < -Math.PI) {
+    return ((2 * -Math.PI) - result) * -1;
+  }
+
+  return result;
 };
 
 module.exports = getHeadingFromPoseToCoordinate;
