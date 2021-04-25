@@ -1,5 +1,5 @@
 /**
- * Returns the heading in radians between two coordinates
+ * Returns an angle in radians between the two given coordinates
  * @param {Object} coordinate1
  * @param {Object} coordinate2
  * @return {Number}

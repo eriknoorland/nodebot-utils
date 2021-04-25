@@ -1,4 +1,4 @@
-const calculateHeading = require('./calculateHeading');
+const calculateAngleBetweenCoordinates = require('./calculateAngleBetweenCoordinates');
 
 /**
  * Returns a heading in radians between the given pose and the target coordinate
@@ -7,7 +7,7 @@ const calculateHeading = require('./calculateHeading');
  * @return {Number}
  */
  const getHeadingFromPoseToCoordinate = (pose, targetCoordinate) => {
-  return calculateHeading(pose, targetCoordinate) - pose.phi;
+  return calculateAngleBetweenCoordinates(pose, targetCoordinate) - pose.phi;
 };
 
 module.exports = getHeadingFromPoseToCoordinate;

@@ -8,7 +8,7 @@ module.exports = {
 
     math: {
       calculateDistance: require('./src/utils/math/calculateDistance'),
-      calculateHeading: require('./src/utils/math/calculateHeading'),
+      calculateAngleBetweenCoordinates: require('./src/utils/math/calculateAngleBetweenCoordinates'),
       deg2rad: require('./src/utils/math/deg2rad'),
       fixedDecimals: require('./src/utils/math/fixedDecimals'),
       getHeadingFromPoseToCoordinate: require('./src/utils/math/getHeadingFromPoseToCoordinate'),

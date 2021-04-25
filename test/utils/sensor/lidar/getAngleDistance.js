@@ -16,7 +16,7 @@ describe('utils/sensor/lidar', function() {
         '7': 17,
       }, 3, 2);
 
-      assert.equal(actual, expected);
+      assert.strictEqual(actual, expected);
     });
 
     it('should return the shortest distance for a given angle range', function() {
@@ -37,7 +37,7 @@ describe('utils/sensor/lidar', function() {
         '12': 14,
       }, 7);
 
-      assert.equal(actual, expected);
+      assert.strictEqual(actual, expected);
     });
   });
 });

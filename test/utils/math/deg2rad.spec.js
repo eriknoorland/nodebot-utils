@@ -7,7 +7,7 @@ describe('utils/math', function() {
       const expected = 0.017453292519943295;
       const actual = deg2rad(1);
 
-      assert.equal(actual, expected);
+      assert.strictEqual(actual, expected);
     });
   });
 });
