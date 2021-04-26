@@ -10,12 +10,6 @@ const getHeadingFromPoseToCoordinate = (pose, targetCoordinate) => {
   const angleBetweenCoordinates = calculateAngleBetweenCoordinates(pose, targetCoordinate);
   const result = angleBetweenCoordinates - pose.phi;
 
-  console.log({
-    angleBetweenCoordinates,
-    phi: pose.phi,
-    result,
-  });
-
   if (result > Math.PI) {
     return ((2 * Math.PI) - result) * -1;
   }
