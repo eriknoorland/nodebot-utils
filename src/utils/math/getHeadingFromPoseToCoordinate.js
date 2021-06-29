@@ -18,7 +18,7 @@ const getHeadingFromPoseToCoordinate = (pose, targetCoordinate) => {
     return ((2 * -Math.PI) - result) * -1;
   }
 
-  return result;
+  return Number(result.toFixed(4));
 };
 
 module.exports = getHeadingFromPoseToCoordinate;
