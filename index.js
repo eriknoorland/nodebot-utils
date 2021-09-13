@@ -13,6 +13,7 @@ module.exports = {
       fixedDecimals: require('./src/utils/math/fixedDecimals'),
       getHeadingFromPoseToCoordinate: require('./src/utils/math/getHeadingFromPoseToCoordinate'),
       getRelativeAngleDifference: require('./src/utils/math/getRelativeAngleDifference'),
+      map: require('./src/utils/math/map'),
       numberInRange: require('./src/utils/math/numberInRange'),
       numberToByteArray: require('./src/utils/math/numberToByteArray'),
       numberToHex: require('./src/utils/math/numberToHex'),
