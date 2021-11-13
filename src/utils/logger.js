@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const colors = {
   reset: { cmd: '\x1b[0m%s\x1b[0m', html: '#fff' },
   green: { cmd: '\x1b[32m%s\x1b[0m', html: '#0f0' },
@@ -16,6 +18,7 @@ const colors = {
  */
 module.exports = (socket) => {
   const logs = [];
+  let dataLog = {};
 
   /**
    * Log
@@ -29,11 +32,59 @@ module.exports = (socket) => {
     logs.push(`<span style="color: ${colors[color].html};">${message}</span>`);
     socket.emit('log', logs.join(','));
 
-    // eslint-disable-next-line no-console
     console.log(colors[color].cmd, message);
+  }
+
+  function create(program) {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = `0${now.getMonth() + 1}`.slice(-2);
+    const day = `0${now.getDate()}`.slice(-2);
+    const timestamp = `${year}-${month}-${day}`;
+
+    dataLog = {
+      timestamp,
+      program,
+      entries: [],
+    };
+  }
+
+  function event(message) {
+    dataLog.entries.push({
+      type: 'event',
+      timestamp: Date.now(),
+      value: message,
+    });
+  }
+
+  function data(data, dataType) {
+    dataLog.entries.push({
+      type: 'data',
+      dataType,
+      timestamp: Date.now(),
+      value: data,
+    });
+  }
+
+  function save(saveDir) {
+    return new Promise(resolve => {
+      const programName = dataLog.program.toLowerCase().split(' ').join('-');
+      const fileName = `${Date.now()}_${programName}.json`;
+      const path = `${saveDir}/${fileName}`;
+      const data = JSON.stringify(dataLog);
+
+      fs.writeFile(path, data, 'utf8', () => {
+        dataLog = {};
+        resolve();
+      });
+    });
   }
 
   return {
     log,
+    create,
+    event,
+    data,
+    save,
   };
 };
