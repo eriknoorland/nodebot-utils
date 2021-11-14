@@ -43,7 +43,7 @@ module.exports = (socket) => {
     const timestamp = `${year}-${month}-${day}`;
 
     dataLog = {
-      timestamp,
+      timestamp: getTimestamp(),
       program,
       entries: [],
     };
@@ -52,7 +52,7 @@ module.exports = (socket) => {
   function event(message) {
     dataLog.entries.push({
       type: 'event',
-      timestamp: Date.now(),
+      timestamp: getTimestamp(),
       value: message,
     });
   }
@@ -61,7 +61,7 @@ module.exports = (socket) => {
     dataLog.entries.push({
       type: 'data',
       dataType,
-      timestamp: Date.now(),
+      timestamp: getTimestamp(),
       value: data,
     });
   }
@@ -69,7 +69,7 @@ module.exports = (socket) => {
   function save(saveDir) {
     return new Promise(resolve => {
       const programName = dataLog.program.toLowerCase().split(' ').join('-');
-      const fileName = `${Date.now()}_${programName}.json`;
+      const fileName = `${getTimestamp()}_${programName}.json`;
       const path = `${saveDir}/${fileName}`;
       const data = JSON.stringify(dataLog);
 
@@ -78,6 +78,18 @@ module.exports = (socket) => {
         resolve();
       });
     });
+  }
+
+  function getTimestamp() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = `0${now.getMonth() + 1}`.slice(-2);
+    const day = `0${now.getDate()}`.slice(-2);
+    const hours = `0${now.getHours()}`.slice(-2);
+    const minutes = `0${now.getMinutes()}`.slice(-2);
+    const seconds = `0${now.getSeconds()}`.slice(-2);
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
   }
 
   return {
