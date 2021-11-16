@@ -123,11 +123,7 @@ module.exports = (socket) => {
   }
 
   function emit(message, color) {
-    logs.push(`
-      <span style="color: ${color.html};">
-        ${message}
-      </span>
-    `);
+    logs.push(`<span style="color: ${color.html};">${message}</span>`);
 
     socket.emit('log', logs.join(','));
     console.log(color.cmd, message);
