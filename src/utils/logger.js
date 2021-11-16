@@ -1,14 +1,11 @@
 const fs = require('fs');
 
 const colors = {
-  reset: { cmd: '\x1b[0m%s\x1b[0m', html: '#fff' },
-  green: { cmd: '\x1b[32m%s\x1b[0m', html: '#0f0' },
-  red: { cmd: '\x1b[31m%s\x1b[0m', html: '#f00' },
-  yellow: { cmd: '\x1b[33m%s\x1b[0m', html: '#ff0' },
-  blue: { cmd: '\x1b[34m%s\x1b[0m', html: '#00f' },
-  magenta: { cmd: '\x1b[35m%s\x1b[0m', html: '#f0f' },
-  cyan: { cmd: '\x1b[36m%s\x1b[0m', html: '#0ff' },
-  white: { cmd: '\x1b[37m%s\x1b[0m', html: '#fff' },
+  log: { cmd: '\x1b[37m%s\x1b[0m', html: '#fff' },
+  info: { cmd: '\x1b[36m%s\x1b[0m', html: '#0ff' },
+  success: { cmd: '\x1b[32m%s\x1b[0m', html: '#0f0' },
+  warning: { cmd: '\x1b[33m%s\x1b[0m', html: '#ff0' },
+  error: { cmd: '\x1b[31m%s\x1b[0m', html: '#f00' },
 };
 
 /**
@@ -18,66 +15,122 @@ const colors = {
  */
 module.exports = (socket) => {
   const logs = [];
-  let dataLog = {};
+  let missionLog = null;
 
   /**
-   * Log
-   * @param {String} body
-   * @param {String} resource
-   * @param {String} color
+   * Logs a message
+   * @param {String} message
    */
-  function log(body, resource = 'app', color = 'reset') {
-    const message = `[${resource}] ${body}`;
-
-    logs.push(`<span style="color: ${colors[color].html};">${message}</span>`);
-    socket.emit('log', logs.join(','));
-
-    console.log(colors[color].cmd, message);
+  function log(message) {
+    emit(message, colors.log);
   }
 
-  function create(program) {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = `0${now.getMonth() + 1}`.slice(-2);
-    const day = `0${now.getDate()}`.slice(-2);
-    const timestamp = `${year}-${month}-${day}`;
+  /**
+   * Logs a success message
+   * @param {String} message
+   */
+  function success(message) {
+    emit(message, colors.success);
+  }
 
-    dataLog = {
+  /**
+   * Logs an info message
+   * @param {String} message
+   */
+  function info(message) {
+    emit(message, colors.info);
+  }
+
+  /**
+   * Logs a warning
+   * @param {String} message
+   */
+  function warn(message) {
+    emit(message, colors.warning);
+  }
+
+  /**
+   * Logs an error
+   * @param {String} message
+   */
+  function error(message) {
+    emit(message, colors.error);
+  }
+
+  /**
+   * Creates a new log object
+   * @param {String} program
+   */
+  function create(program) {
+    missionLog = {
       timestamp: getTimestamp(),
       program,
       entries: [],
     };
   }
 
+  /**
+   * Writes an event string to the log
+   * @param {String} message
+   */
   function event(message) {
-    dataLog.entries.push({
-      type: 'event',
-      timestamp: getTimestamp(),
-      value: message,
-    });
+    if (missionLog) {
+      missionLog.entries.push({
+        type: 'event',
+        timestamp: getTimestamp(),
+        value: message,
+      });
+    }
   }
 
+  /**
+   * Writes a data object to the log
+   * @param {Object} data
+   * @param {String} dataType
+   */
   function data(data, dataType) {
-    dataLog.entries.push({
-      type: 'data',
-      dataType,
-      timestamp: getTimestamp(),
-      value: data,
-    });
+    if (missionLog) {
+      missionLog.entries.push({
+        type: 'data',
+        dataType,
+        timestamp: getTimestamp(),
+        value: data,
+      });
+    }
   }
 
+  /**
+   * Stores the log file at the given location
+   * @param {String} saveDir
+   * @returns
+   */
   function save(saveDir) {
+    if (!missionLog) {
+      return Promise.resolve();
+    }
+
     return new Promise(resolve => {
-      const programName = dataLog.program.toLowerCase().split(' ').join('-');
+      const programName = missionLog.program.toLowerCase().split(' ').join('-');
       const fileName = `${getTimestamp()}_${programName}.json`;
       const path = `${saveDir}/${fileName}`;
-      const data = JSON.stringify(dataLog);
+      const data = JSON.stringify(missionLog);
 
       fs.writeFile(path, data, 'utf8', () => {
-        dataLog = {};
+        missionLog = null;
         resolve();
       });
     });
+  }
+
+  function emit(message, color) {
+    logs.push(`
+      <span style="color: ${color.html};">
+        ${message}
+      </span>
+    `);
+
+    socket.emit('log', logs.join(','));
+    console.log(color.cmd, message);
   }
 
   function getTimestamp() {
@@ -94,6 +147,10 @@ module.exports = (socket) => {
 
   return {
     log,
+    success,
+    info,
+    warn,
+    error,
     create,
     event,
     data,
