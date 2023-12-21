@@ -11,11 +11,11 @@ const getHeadingFromPoseToCoordinate = (pose, targetCoordinate) => {
   const result = angleBetweenCoordinates - pose.phi;
 
   if (result > Math.PI) {
-    return ((2 * Math.PI) - result) * -1;
+    return Number((((2 * Math.PI) - result) * -1).toFixed(4));
   }
 
   if (result < -Math.PI) {
-    return ((2 * -Math.PI) - result) * -1;
+    return Number((((2 * -Math.PI) - result) * -1).toFixed(4));
   }
 
   return Number(result.toFixed(4));

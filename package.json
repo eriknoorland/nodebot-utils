@@ -4,8 +4,7 @@
   "description": "A Javascript library for common utiitiess for my NodeJS based robots",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive",
-    "lint": "eslint ."
+    "test": "mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -18,13 +17,6 @@
   },
   "homepage": "https://github.com/eriknoorland/node-robotlib#readme",
   "devDependencies": {
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
     "mocha": "^6.2.2"
-  },
-  "dependencies": {
-    "serialport": "^8.0.8"
   }
 }

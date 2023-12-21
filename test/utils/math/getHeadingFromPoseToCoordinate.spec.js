@@ -24,7 +24,7 @@ describe('utils/math', function() {
       const pose = { ...currentPose, phi: Math.PI };
       const target = { ...currentPose };
 
-      const expected = -Math.PI;
+      const expected = -Math.PI.toFixed(4);
       const actual = getHeadingFromPoseToCoordinate(pose, target);
 
       assert.strictEqual(actual, expected);
@@ -36,7 +36,7 @@ describe('utils/math', function() {
         x: currentPose.x - 100,
       };
 
-      const expected = Math.PI;
+      const expected = Number(Math.PI.toFixed(4));
       const actual = getHeadingFromPoseToCoordinate(currentPose, target);
 
       assert.strictEqual(actual, expected);
@@ -49,7 +49,7 @@ describe('utils/math', function() {
         x: currentPose.x - 100,
       };
 
-      const expected = Math.PI / 2;
+      const expected = Number((Math.PI / 2).toFixed(4));
       const actual = getHeadingFromPoseToCoordinate(pose, target);
 
       assert.strictEqual(actual, expected);
@@ -62,7 +62,7 @@ describe('utils/math', function() {
         x: currentPose.x - 100,
       };
 
-      const expected = -Math.PI / 2;
+      const expected = Number((-Math.PI / 2).toFixed(4));
       const actual = getHeadingFromPoseToCoordinate(pose, target);
 
       assert.strictEqual(actual, expected);
@@ -75,7 +75,7 @@ describe('utils/math', function() {
         x: currentPose.x - 100,
       };
 
-      const expected = (Math.PI / 4) * 3;
+      const expected = Number(((Math.PI / 4) * 3).toFixed(4));
       const actual = getHeadingFromPoseToCoordinate(pose, target);
 
       assert.strictEqual(actual, expected);
@@ -88,7 +88,7 @@ describe('utils/math', function() {
         x: currentPose.x - 100,
       };
 
-      const expected = -Math.PI;
+      const expected = Number((-Math.PI).toFixed(4));
       const actual = getHeadingFromPoseToCoordinate(pose, target);
 
       assert.strictEqual(actual, expected);
