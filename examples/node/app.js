@@ -1,4 +1,4 @@
-const robotlib = require('../../dist/robotlib.cjs');
+const nodebotUtils = require('../../dist/robotlib.cjs');
 
-console.log(robotlib);
-console.log(robotlib.math.deg2rad(180));
+console.log(nodebotUtils);
+console.log(nodebotUtils.math.deg2rad(180));
