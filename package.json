@@ -1,5 +1,5 @@
 {
-  "name": "nodebot-utils",
+  "name": "@eriknoorland/nodebot-utils",
   "version": "1.0.0",
   "description": "A Javascript library for common utilities for my NodeJS based robots",
   "files": [
