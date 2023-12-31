@@ -5,13 +5,13 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/robotlib.cjs",
-  "module": "./dist/robotlib.js",
-  "types": "./dist/robotlib.d.ts",
+  "main": "./dist/nodebot-utils.cjs",
+  "module": "./dist/nodebot-utils.js",
+  "types": "./dist/nodebot-utils.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/robotlib.js",
-      "require": "./dist/robotlib.cjs"
+      "import": "./dist/nodebot-utils.js",
+      "require": "./dist/nodebot-utils.cjs"
     }
   },
   "scripts": {

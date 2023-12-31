@@ -2,7 +2,7 @@ import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import { dts } from 'rollup-plugin-dts';
 
-const name = 'robotlib';
+const name = 'nodebot-utils';
 const outputFormats = [
   {
     file: `dist/${name}.js`,
