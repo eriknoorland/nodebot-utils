@@ -1,22 +1,44 @@
 {
   "name": "robotlib",
-  "version": "0.0.1",
-  "description": "A Javascript library for common utiitiess for my NodeJS based robots",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "A Javascript library for common utilities for my NodeJS based robots",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/robotlib.cjs",
+  "module": "./dist/robotlib.js",
+  "types": "./dist/robotlib.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/robotlib.js",
+      "require": "./dist/robotlib.cjs"
+    }
+  },
   "scripts": {
-    "test": "mocha --recursive"
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eriknoorland/node-robotlib.git"
   },
-  "author": "Erik Noorland <mail@eriknoorland.nl> (eriknoorland.nl)",
+  "author": "Erik Noorland (eriknoorland.nl)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/eriknoorland/node-robotlib/issues"
   },
   "homepage": "https://github.com/eriknoorland/node-robotlib#readme",
   "devDependencies": {
-    "mocha": "^6.2.2"
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.10.5",
+    "mocha": "^10",
+    "rollup": "^4.9.1",
+    "rollup-plugin-dts": "^6.1.0",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
   }
 }
