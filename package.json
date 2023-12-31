@@ -1,6 +1,6 @@
 {
   "name": "@eriknoorland/nodebot-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Javascript library for common utilities for my NodeJS based robots",
   "files": [
     "dist"
