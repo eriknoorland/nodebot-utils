@@ -6,6 +6,12 @@ export const deg2rad = (deg: number) => deg / (180 / Math.PI);
 
 export const rad2deg = (rad: number) => rad * (180 / Math.PI);
 
+export const byteArrayToNumber = (bytes: number[]) => {
+  const binary = bytes.reduce((acc, byte) => `${acc}${parseDecToBinary(byte)}`, '');
+
+  return parseInt(binary, 10);
+};
+
 export const calculateAngleBetweenCoordinates = (p1: Point, p2: Point) => {
   const { x: x1, y: y1 } = p1;
   const { x: x2, y: y2 } = p2;
