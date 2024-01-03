@@ -9,7 +9,7 @@ export const rad2deg = (rad: number) => rad * (180 / Math.PI);
 export const byteArrayToNumber = (bytes: number[]) => {
   const binary = bytes.reduce((acc, byte) => `${acc}${parseDecToBinary(byte)}`, '');
 
-  return parseInt(binary, 10);
+  return parseInt(binary, 2);
 };
 
 export const calculateAngleBetweenCoordinates = (p1: Point, p2: Point) => {
