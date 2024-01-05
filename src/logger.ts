@@ -30,7 +30,7 @@ const colors = {
   error: { cmd: '\x1b[31m%s\x1b[0m', html: '#f00' },
 };
 
-export default (socket: Socket) => {
+export const logger = (socket: Socket) => {
   const logs: string[] = [];
   let missionLog: MissionLog | null = null;
 
