@@ -114,3 +114,29 @@ export const tickSpeedToSpeed = (tickSpeed: number, distancePerTick: number, loo
 
   return speedPerSecond;
 };
+
+export const normalizeAngle = (angle: number): number => {
+  if (angle >= 360) {
+    return angle % 360;
+  }
+
+  if (angle < 0) {
+    return angle + 360;
+  }
+
+  return angle;
+};
+
+// https://stackoverflow.com/questions/29629597/how-to-convert-float-into-byte-array
+export const float2ByteArray = (value: number | number[]): number[] => {
+  const floats = new Float32Array(Array.isArray(value) ? value : [value]);
+
+  return Array.from(new Int8Array(floats.buffer));
+};
+
+export const byteArray2Float = (byteArray: number[]): number => {
+  const buffer = new Int8Array(byteArray).buffer;
+  const view = new DataView(buffer);
+
+  return view.getFloat32(0, true);
+};

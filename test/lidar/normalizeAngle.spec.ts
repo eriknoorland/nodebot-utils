@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { normalizeAngle } from '../../src/lidar';
+import { normalizeAngle } from '../../src/math';
 
 describe('lidar', function() {
   describe('#normalizeAngle', function() {
