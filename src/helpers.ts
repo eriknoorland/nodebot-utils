@@ -1,33 +1,33 @@
-import EventEmitter from 'events';
+// import EventEmitter from 'events';
 // import { getAngleDistance } from './lidar';
 
-export const countdown = (count: number) => {
-  const eventEmitter = new EventEmitter();
+// export const countdown = (count: number) => {
+//   const eventEmitter = new EventEmitter();
 
-  function start(): Promise<void> {
-    let remainingCount = count;
+//   function start(): Promise<void> {
+//     let remainingCount = count;
 
-    eventEmitter.emit('count', remainingCount / 1000);
+//     eventEmitter.emit('count', remainingCount / 1000);
 
-    return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        remainingCount -= 1000;
-        eventEmitter.emit('count', remainingCount / 1000);
+//     return new Promise((resolve) => {
+//       const interval = setInterval(() => {
+//         remainingCount -= 1000;
+//         eventEmitter.emit('count', remainingCount / 1000);
 
-        if (remainingCount <= 0) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 1000);
-    });
-  }
+//         if (remainingCount <= 0) {
+//           clearInterval(interval);
+//           resolve();
+//         }
+//       }, 1000);
+//     });
+//   }
 
-  return {
-    start,
-    on: eventEmitter.on.bind(eventEmitter),
-    off: eventEmitter.off.bind(eventEmitter),
-  };
-};
+//   return {
+//     start,
+//     on: eventEmitter.on.bind(eventEmitter),
+//     off: eventEmitter.off.bind(eventEmitter),
+//   };
+// };
 
 // export const debounce = (func: Function, wait: number, immediate: boolean) => {
 //   let timeout: ReturnType<typeof setTimeout> | null;
