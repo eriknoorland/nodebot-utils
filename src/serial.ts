@@ -3,6 +3,8 @@ import { SerialDataPacket, SerialDataPacketCallback, SerialDataStartFlags, Seria
 
 const cobs = require('cobs');
 
+export { SerialDataPacket, SerialDataPacketCallback, SerialDataStartFlags, SerialMetaData };
+
 export class SerialDataParser extends Transform {
   private startFlags: SerialDataStartFlags;
   private numDescriptorBytes: number;
