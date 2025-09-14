@@ -1,14 +1,14 @@
-export type SerialDataStartFlags = [number, number]
+export type TSerialDataStartFlags = [number, number]
 
-export type SerialMetaData = {
-  startFlags: SerialDataStartFlags,
+export type TSerialMetaData = {
+  startFlags: TSerialDataStartFlags,
   command: number,
   dataLength: number,
 }
 
-export type SerialDataPacket = number[]
+export type TSerialDataPacket = number[]
 
-export type SerialDataPacketCallback = (metaData: SerialMetaData, dataPacket: SerialDataPacket) => void
+export type TSerialDataPacketCallback = (metaData: TSerialMetaData, dataPacket: TSerialDataPacket) => void
 
 export interface Point {
   x: number;

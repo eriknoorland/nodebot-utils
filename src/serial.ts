@@ -1,18 +1,18 @@
 import { Transform } from 'stream';
-import { SerialDataPacket, SerialDataPacketCallback, SerialDataStartFlags, SerialMetaData } from './interfaces';
+import { TSerialDataPacket, TSerialDataPacketCallback, TSerialDataStartFlags, TSerialMetaData } from './interfaces';
 
 const cobs = require('cobs');
 
-export { SerialDataPacket, SerialDataPacketCallback, SerialDataStartFlags, SerialMetaData };
+export { TSerialDataPacket, TSerialDataPacketCallback, TSerialDataStartFlags, TSerialMetaData };
 
 export class SerialDataParser extends Transform {
-  private startFlags: SerialDataStartFlags;
+  private startFlags: TSerialDataStartFlags;
   private numDescriptorBytes: number;
-  private onDataPacket: SerialDataPacketCallback;
+  private onDataPacket: TSerialDataPacketCallback;
   private bufferStartFlags: Buffer;
   private buffer: Buffer;
 
-  constructor(startFlags: SerialDataStartFlags, numDescriptorBytes: number, onDataPacket: SerialDataPacketCallback) {
+  constructor(startFlags: TSerialDataStartFlags, numDescriptorBytes: number, onDataPacket: TSerialDataPacketCallback) {
     super();
 
     this.startFlags = startFlags;
@@ -37,8 +37,8 @@ export class SerialDataParser extends Transform {
             const packetEnd = packetStart + this.numDescriptorBytes + dataLength + 1;
             const packet = this.buffer.slice(packetStart, packetEnd);
             const decodedPacket: Buffer = cobs.decode(packet);
-            const packetData: SerialDataPacket = [...decodedPacket.slice(this.numDescriptorBytes)];
-            const metaData: SerialMetaData = {
+            const packetData: TSerialDataPacket = [...decodedPacket.slice(this.numDescriptorBytes)];
+            const metaData: TSerialMetaData = {
               startFlags: [...this.startFlags],
               command,
               dataLength,
