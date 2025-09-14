@@ -22,6 +22,8 @@ interface Color {
   html: string;
 };
 
+export type Logger = ReturnType<typeof logger>
+
 const colors = {
   log: { cmd: '\x1b[37m%s\x1b[0m', html: '#fff' },
   info: { cmd: '\x1b[36m%s\x1b[0m', html: '#0ff' },
