@@ -1,4 +1,4 @@
-import { Lidar, LidarMeasurement } from './interfaces';
+import { LidarMeasurement } from './interfaces';
 
 // returns an object containing averaged measured angle distances
 // export const averageMeasurements = (angleMeasurements: Object): Promise<Object> => {
@@ -24,44 +24,32 @@ import { Lidar, LidarMeasurement } from './interfaces';
 // }
 
 // Returns an object with the angle and distance for the longest measured distance
-export const getLongestDistance = (measurements: Array<LidarMeasurement>) => measurements
+export const getLongestDistance = (measurements: Array<LidarMeasurement>): LidarMeasurement => measurements
   .reduce((max, m) => (m.distance > max.distance ? m : max), measurements[0]);
 
 // Returns an object with the angle and distance for the shortest measured distance
-export const getShortestDistance = (measurements: Array<LidarMeasurement>) => measurements
+export const getShortestDistance = (measurements: Array<LidarMeasurement>): LidarMeasurement => measurements
   .reduce((min, m) => (m.distance < min.distance ? m : min), measurements[0]);
 
 // Resolves when for the given angle the allowed distance is reacher or passed
-export const isWithinDistance = (lidar: Lidar, allowedDistance: number, checkAngle: number): Promise<void> => new Promise(resolve => {
-  let count = 0;
+// export const isWithinDistance = (lidar: Lidar, allowedDistance: number, checkAngle: number): Promise<void> => new Promise(resolve => {
+//   let count = 0;
 
-  const onLidarData = ({ quality, angle, distance }: LidarMeasurement) => {
-    if (quality > 10 && Math.floor(angle) === checkAngle) {
-      if (distance > 0 && distance <= allowedDistance) {
-        count += 1;
+//   const onLidarData = ({ quality, angle, distance }: LidarMeasurement) => {
+//     if (quality > 10 && Math.floor(angle) === checkAngle) {
+//       if (distance > 0 && distance <= allowedDistance) {
+//         count += 1;
 
-        if (count % 2 === 0) {
-          lidar.off('data', onLidarData);
-          resolve();
-        }
-      }
-    }
-  };
+//         if (count % 2 === 0) {
+//           lidar.off('data', onLidarData);
+//           resolve();
+//         }
+//       }
+//     }
+//   };
 
-  lidar.on('data', onLidarData);
-});
-
-export const normalizeAngle = (angle: number) => {
-  if (angle >= 360) {
-    return angle % 360;
-  }
-
-  if (angle < 0) {
-    return angle + 360;
-  }
-
-  return angle;
-};
+//   lidar.on('data', onLidarData);
+// });
 
 // scan accumulates lidar data for a set amount of time
 // export const scan = (lidar: Lidar, duration: number, offset = 0, acc = {}) => new Promise((resolve) => {
