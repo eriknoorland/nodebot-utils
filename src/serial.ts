@@ -3,13 +3,16 @@ import { ChunkReceivedCallback, SerialDataPacket, SerialDataPacketCallback, Seri
 
 const cobs = require('cobs');
 
+function findStartFlagsIndex(chunk: Buffer, startFlags: Buffer) {
+  return chunk.findIndex((_, i) => startFlags.every((value, j) => chunk[i + j] === value));
+}
+
 export class SerialDataParser extends Transform {
   private startFlags: SerialDataStartFlags;
   private numDescriptorBytes: number;
   private onDataPacket: SerialDataPacketCallback;
   private onChunkReceived: ChunkReceivedCallback | undefined;
   private bufferStartFlags: Buffer;
-  private buffer: Buffer;
 
   constructor(startFlags: SerialDataStartFlags, numDescriptorBytes: number, onDataPacket: SerialDataPacketCallback, onChunkReceived?: ChunkReceivedCallback) {
     super();
@@ -18,40 +21,32 @@ export class SerialDataParser extends Transform {
     this.numDescriptorBytes = numDescriptorBytes;
     this.onDataPacket = onDataPacket;
     this.onChunkReceived = onChunkReceived;
-    this.bufferStartFlags = Buffer.from(startFlags)
-    this.buffer = Buffer.alloc(0);
+    this.bufferStartFlags = Buffer.from(startFlags);
   }
 
   _transform(chunk: Buffer, encoding: string, callback: Function) {
-    this.buffer = Buffer.concat([this.buffer, chunk]);
+    this.onChunkReceived && this.onChunkReceived(chunk);
 
-    this.onChunkReceived && this.onChunkReceived(chunk, this.buffer);
+    let decodedChunk = cobs.decode(chunk);
+    
+    while (findStartFlagsIndex(decodedChunk, this.bufferStartFlags) !== -1) {
+      const packetStart = findStartFlagsIndex(decodedChunk, this.bufferStartFlags);
+      
+      if (decodedChunk.length > packetStart + this.numDescriptorBytes) {
+        const command = decodedChunk[packetStart + this.bufferStartFlags.length];
+        const dataLength = decodedChunk[packetStart + this.bufferStartFlags.length + 1];
+        const packetEnd = packetStart + this.numDescriptorBytes + dataLength;
+        const packet = decodedChunk.slice(packetStart, packetEnd);
+        const packetData: SerialDataPacket = [...packet.slice(this.numDescriptorBytes)];
+        const metaData: SerialMetaData = {
+          startFlags: this.startFlags,
+          command,
+          dataLength,
+        };
 
-    for (let j = 0; j < this.buffer.length; j++) {
-      if (this.buffer.indexOf(this.bufferStartFlags, 0, 'hex') !== -1) {
-        const packetStart = this.buffer.indexOf(this.bufferStartFlags, 0, 'hex') - 1;
+        decodedChunk = decodedChunk.slice(packetEnd);
 
-        if (this.buffer.length > packetStart + this.numDescriptorBytes) {
-          const command = this.buffer[packetStart + 3];
-          const dataLength = this.buffer[packetStart + 4];
-
-          if (this.buffer.length > packetStart + this.numDescriptorBytes + dataLength + 1) {
-            const packetEnd = packetStart + this.numDescriptorBytes + dataLength + 1;
-            const packet = this.buffer.slice(packetStart, packetEnd);
-            const decodedPacket: Buffer = cobs.decode(packet);
-            const packetData: SerialDataPacket = [...decodedPacket.slice(this.numDescriptorBytes)];
-            const metaData: SerialMetaData = {
-              startFlags: [...this.startFlags],
-              command,
-              dataLength,
-            }
-
-            this.buffer = this.buffer.slice(packetEnd);
-            j = 0;
-
-            this.onDataPacket(metaData, packetData);
-          }
-        }
+        this.onDataPacket(metaData, packetData);
       }
     }
 

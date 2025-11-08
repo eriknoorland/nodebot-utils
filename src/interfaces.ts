@@ -10,7 +10,7 @@ export type SerialDataPacket = number[]
 
 export type SerialDataPacketCallback = (metaData: SerialMetaData, dataPacket: SerialDataPacket) => void
 
-export type ChunkReceivedCallback = (chunk: Buffer, buffer: Buffer) => void
+export type ChunkReceivedCallback = (chunk: Buffer) => void
 
 export interface Point {
   x: number;
